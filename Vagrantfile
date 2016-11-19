@@ -80,17 +80,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # If a hostsfile manager plugin is installed, add all server names as aliases.
   aliases = []
-  if vconfig['drupalvm_webserver'] == 'apache'
-    vconfig['apache_vhosts'].each do |host|
-      aliases.push(host['servername'])
-      aliases.concat(host['serveralias'].split) if host['serveralias']
-    end
-  else
-    vconfig['nginx_hosts'].each do |host|
-      aliases.concat(host['server_name'].split)
-      aliases.concat(host['server_name_redirect'].split) if host['server_name_redirect']
-    end
-  end
+#  if vconfig['drupalvm_webserver'] == 'apache'
+#    vconfig['apache_vhosts'].each do |host|
+#      aliases.push(host['servername'])
+#      aliases.concat(host['serveralias'].split) if host['serveralias']
+#    end
+#  else
+#    vconfig['nginx_hosts'].each do |host|
+#      aliases.concat(host['server_name'].split)
+#      aliases.concat(host['server_name_redirect'].split) if host['server_name_redirect']
+#    end
+#  end
   aliases = aliases.uniq - [config.vm.hostname, vconfig['vagrant_ip']]
 
   if Vagrant.has_plugin?('vagrant-hostsupdater')
