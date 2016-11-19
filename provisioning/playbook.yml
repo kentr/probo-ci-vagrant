@@ -49,6 +49,8 @@
     - geerlingguy.firewall
     - geerlingguy.git
     - geerlingguy.nodejs
+    - role: angstwad.docker_ubuntu
+      docker_group_members: ["{{ vagrant_user }}"]
 #    - geerlingguy.postfix
 #    - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache' }
 #    - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache' }
