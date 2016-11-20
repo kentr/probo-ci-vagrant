@@ -1,0 +1,26 @@
+---
+# tasks file for kentr.proboci
+
+- name: Clone probo repository
+  git:
+    repo: https://github.com/ProboCI/probo.git
+    dest: '{{ probo_src_dir }}/probo'
+
+- name: Clone probo-asset-receiver repository
+  git:
+    repo: https://github.com/ProboCI/probo-asset-receiver.git
+    dest: '{{ probo_src_dir }}/probo-asset-receiver'
+
+- name: Clone probo-loom repository
+  git:
+    repo: https://github.com/ProboCI/probo-loom.git
+    dest: '{{ probo_src_dir }}/probo-loom'
+
+- name: Clone probo-proxy repository
+  git:
+    repo: https://github.com/ProboCI/probo-proxy.git
+    dest: '{{ probo_src_dir }}/probo-proxy'
+
+- name: Pull docker image
+  # Note: docker pull automatically checks if image exists.
+  command: docker pull proboci/ubuntu-14.04-lamp
