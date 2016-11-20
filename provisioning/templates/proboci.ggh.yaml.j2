@@ -1,0 +1,12 @@
+# Port for the server to listen on
+port: 3010
+hostname: 0.0.0.0
+
+# Github hook and credentials
+githubWebhookPath: '/github-webhook'
+githubWebhookSecret: '{{ probo_github_webhook_secret }}'
+githubAPIToken: '{{ probo_github_api_token }}'
+
+# Container Manager API server
+api:
+  url: "http://localhost:3020"

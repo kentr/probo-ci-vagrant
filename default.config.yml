@@ -1,13 +1,13 @@
 ---
 # `vagrant_box` can also be set to geerlingguy/centos6, geerlingguy/centos7,
 # geerlingguy/ubuntu1404, geerlingguy/ubuntu1204, parallels/ubuntu-14.04, etc.
-vagrant_box: geerlingguy/ubuntu1604
+vagrant_box: ubuntu/trusty64
 vagrant_user: vagrant
 vagrant_synced_folder_default_type: nfs
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
-vagrant_hostname: local.probo.ci
+vagrant_hostname: probo.domain.com
 vagrant_machine_name: proboci
 vagrant_ip: 192.168.88.88
 
@@ -38,6 +38,16 @@ drupalvm_ansible_version_min: '2.1'
 
 # Force use of ansible_local provisioner, even if Ansible is installed on host.
 force_ansible_local: false
+
+# ProboCI base install directory.
+probo_src_dir: '/home/{{ vagrant_user }}'
+
+# See https://github.com/ProboCI/probo/blob/master/QUICKSTART.md#configure
+# Port for the ProboCI server to listen on.
+# probo_listen_port: '3010'
+# ProboCI Github hook and credentials.
+probo_github_webhook_secret: 'CHANGE-ME'
+githubAPIToken: 'personal token here'
 
 ## The web server software to use. Can be either 'apache' or 'nginx'.
 #drupalvm_webserver: apache
@@ -220,16 +230,20 @@ extra_security_enabled: false
 
 firewall_allowed_tcp_ports:
   - "22"
-  - "25"
-  - "80"
-  - "81"
-  - "443"
-  - "4444"
-  - "8025"
-  - "8080"
-  - "8443"
-  - "8983"
-  - "9200"
+  # - "25"
+  # - "80"
+  # - "81"
+  # - "443"
+  # - "4444"
+  # - "8025"
+  # - "8080"
+  # - "8443"
+  # - "8983"
+  # - "9200"
+  - "3010"
+  - "3050"
+  - "3060"
+  - "3070"
 firewall_log_dropped_packets: false
 
 ## PHP Configuration. Currently-supported versions: 5.6, 7.0.
@@ -273,7 +287,7 @@ post_provision_scripts: []
 
 # Node.js configuration (if enabled above).
 # Valid examples: "0.10", "0.12", "4.x", "5.x".
-nodejs_version: "0.12"
+nodejs_version: "4.x"
 nodejs_npm_global_packages: []
 nodejs_install_npm_user: "{{ drupalvm_user }}"
 npm_config_prefix: "/home/{{ drupalvm_user }}/.npm-global"
@@ -313,4 +327,4 @@ npm_config_prefix: "/home/{{ drupalvm_user }}/.npm-global"
 # Other configuration.
 #dashboard_install_dir: /var/www/dashboard
 #known_hosts_path: ~/.ssh/known_hosts
-#ssh_home: "{{ drupal_core_path }}"
+ssh_home: '{{ probo_src_dir }}/probo'

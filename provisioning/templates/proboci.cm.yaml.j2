@@ -1,0 +1,22 @@
+#jinja2:  variable_start_string: "[%" , variable_end_string: "%]"
+# container manager config file
+
+hostname: localhost
+port: 3020
+# name of the instance used in status updates
+instanceName: 'ProboCI-local'
+
+# Github Handler server
+api:
+  url: "http://localhost:3010"
+
+# Loom (log aggregator server)
+loom:
+  url: "http://localhost:3060"
+
+# asset server (must NOT be localhost because it's called from within a container)
+assets:
+  url: "http://[% vagrant_hostname %]:3070"
+
+# URL template string for viewing each build. {{buildId}} expands to the id of the build.
+buildUrl: "http://{{buildId}}.[% vagrant_hostname %]:3050/"

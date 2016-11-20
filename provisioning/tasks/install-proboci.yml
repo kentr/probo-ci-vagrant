@@ -24,3 +24,92 @@
 - name: Pull docker image
   # Note: docker pull automatically checks if image exists.
   command: docker pull proboci/ubuntu-14.04-lamp
+
+- name: "Install forever (to run Node.js app)."
+  npm: name=forever global=yes state=present
+
+- name: Check list of Node.js apps running.
+  command: forever list
+  register: forever_list
+  changed_when: false
+
+################################################################################
+# GitHub Handler
+- name: Npm install probo
+  npm:
+    path: '{{ probo_src_dir }}/probo'
+
+- name: Install probo github handler config
+  template:
+    src: templates/proboci.ggh.yaml.j2
+    dest: '{{ probo_src_dir }}/probo/ggh.yaml'
+    mode: 0600
+
+- set_fact:
+    probo_github_handler_cmd: 'bin/probo github-handler -c ghh.yaml'
+
+- name: Start probo github handler.
+  command: 'forever start {{ probo_github_handler_cmd }}'
+  when: "forever_list.stdout.find('{{ probo_github_handler_cmd }}') == -1"
+  args:
+    chdir: '{{ probo_src_dir }}/probo'
+
+################################################################################
+# Container Manager
+- name: Install probo container manager config.
+  template:
+    src: templates/proboci.cm.yaml.j2
+    dest: '{{ probo_src_dir }}/probo/cm.yaml'
+    mode: 0600
+
+- set_fact:
+    probo_container_manager_cmd: 'bin/probo container-manager -c cm.yaml'
+
+- name: Start probo container manager.
+  command: 'forever start {{ probo_container_manager_cmd }}'
+  when: "forever_list.stdout.find('{{ probo_container_manager_cmd }}') == -1"
+  args:
+    chdir: '{{ probo_src_dir }}/probo'
+
+################################################################################
+# Build Proxy
+- name: Npm install probo proxy.
+  npm:
+    path: '{{ probo_src_dir }}/probo-proxy'
+
+- name: Install probo build proxy config.
+  template:
+    src: templates/proboci.proxy.yaml.j2
+    dest: '{{ probo_src_dir }}/probo-proxy/proxy.yaml'
+    mode: 0600
+
+- set_fact:
+    probo_build_proxy_cmd: 'index.js -c proxy.yaml'
+
+- name: Start probo build proxy.
+  command: 'forever start {{ probo_build_proxy_cmd }}'
+  when: "forever_list.stdout.find('{{ probo_build_proxy_cmd }}') == -1"
+  args:
+    chdir: '{{ probo_src_dir }}/probo-proxy'
+
+################################################################################
+# Loom
+- name: Npm install probo loom.
+  npm:
+    path: '{{ probo_src_dir }}/probo-loom'
+
+- set_fact:
+    probo_loom_cmd: 'index.js'
+
+- name: Start probo loom.
+  command: 'forever start {{ probo_loom_cmd }}'
+  when: "forever_list.stdout.find('{{ probo_loom_cmd }}') == -1"
+  args:
+    chdir: '{{ probo_src_dir }}/probo-loom'
+
+################################################################################
+# Spy
+#- name: Start npm spy.
+#  command: 'npm run spy'
+#  args:
+#    chdir: '{{ probo_src_dir }}/probo-loom'
