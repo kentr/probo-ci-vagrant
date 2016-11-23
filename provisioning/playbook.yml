@@ -51,6 +51,7 @@
     - geerlingguy.nodejs
     - role: angstwad.docker_ubuntu
       docker_group_members: ["{{ vagrant_user }}"]
+    - jacobwgillespie-ansible.rethinkdb
 #    - kentr.proboci
 #    - geerlingguy.postfix
 #    - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache' }

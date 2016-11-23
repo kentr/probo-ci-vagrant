@@ -11,3 +11,4 @@
   version: 1.4.0
 - src: angstwad.docker_ubuntu
   version: v2.0
+- src: jacobwgillespie-ansible.rethinkdb
