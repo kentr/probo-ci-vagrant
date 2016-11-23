@@ -52,87 +52,18 @@
     - role: angstwad.docker_ubuntu
       docker_group_members: ["{{ vagrant_user }}"]
     - jacobwgillespie-ansible.rethinkdb
-#    - kentr.proboci
-#    - geerlingguy.postfix
-#    - { role: geerlingguy.apache, when: drupalvm_webserver == 'apache' }
-#    - { role: geerlingguy.apache-php-fpm, when: drupalvm_webserver == 'apache' }
-#    - { role: geerlingguy.nginx, when: drupalvm_webserver == 'nginx' }
-#    - geerlingguy.php
-#    - geerlingguy.php-pecl
-#    - geerlingguy.composer
-#    - geerlingguy.drush
-#    - { role: geerlingguy.mysql, when: drupalvm_database == 'mysql' }
-#    - { role: geerlingguy.php-mysql, when: drupalvm_database == 'mysql' }
-#    - { role: geerlingguy.postgresql, when: drupalvm_database == 'pgsql' }
-#    - { role: geerlingguy.php-pgsql, when: drupalvm_database == 'pgsql' }
 
-#    # Conditionally-installed roles.
-#    - { role: geerlingguy.drupal-console, when: 'drupal_major_version > 7 and "drupalconsole" in installed_extras' }
-#    - { role: geerlingguy.memcached, when: '"memcached" in installed_extras' }
-#    - { role: geerlingguy.php-memcached, when: '"memcached" in installed_extras' }
-#    - { role: geerlingguy.php-xdebug, when: '"xdebug" in installed_extras' }
-#    - { role: geerlingguy.php-xhprof, when: '"xhprof" in installed_extras' }
-#    - { role: geerlingguy.blackfire, when: '"blackfire" in installed_extras' }
-#    - { role: geerlingguy.adminer, when: '"adminer" in installed_extras' }
+# Conditionally-installed roles.
 #    - { role: geerlingguy.pimpmylog, when: '"pimpmylog" in installed_extras' }
 #    - { role: geerlingguy.daemonize, when: '"mailhog" in installed_extras' }
 #    - { role: geerlingguy.mailhog, when: '"mailhog" in installed_extras' }
-#    - { role: franklinkim.newrelic, when: '"newrelic" in installed_extras' }
-#    - { role: geerlingguy.nodejs, when: '"nodejs" in installed_extras' }
-#    - { role: geerlingguy.redis, when: '"redis" in installed_extras' }
-#    - { role: geerlingguy.php-redis, when: '"redis" in installed_extras' }
-#    - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
-#    - role: geerlingguy.java
-#      when: >
-#        "java" in installed_extras or
-#        "solr" in installed_extras or
-#        "selenium" in installed_extras or
-#        "elasticsearch" in installed_extras
-#    - { role: arknoll.selenium, when: '"selenium" in installed_extras' }
-#    - { role: geerlingguy.solr, when: '"solr" in installed_extras' }
-#    - { role: geerlingguy.elasticsearch, when: '"elasticsearch" in installed_extras' }
-#    - { role: geerlingguy.varnish, when: '"varnish" in installed_extras' }
 
     # Roles for security and stability on production.
     - { role: geerlingguy.security, when: extra_security_enabled }
 
   tasks:
-#    - name: Check if Drupal is already set up.
-#      stat: "path={{ drupal_core_path }}/index.php"
-#      register: drupal_site
-#      ignore_errors: true
-#
-#    - name: Define drupal_site_exists
-#      set_fact:
-#        drupal_site_exists: "{{ drupal_site.stat.exists|default(false) }}"
-#
 #    - include: tasks/sshd.yml
 #    - include: tasks/extras.yml
-#    - include: tasks/www.yml
-#    - include: tasks/apparmor.yml
-#      when: ansible_os_family == 'Debian' and drupalvm_database == 'mysql'
-#
-#    # Build makefile if configured.
-#    - include: tasks/build-makefile.yml
-#      when: build_makefile
-#
-#    # Build with composer if configured.
-#    - include: tasks/build-composer.yml
-#      when: build_composer
-#
-#    # Build a composer project if configured.
-#    - include: tasks/build-composer-project.yml
-#      when: build_composer_project
-#
-#    # Install site if configured.
-#    - include: tasks/install-site.yml
-#      when: install_site
-#
-#    - include: tasks/drush-aliases.yml
-#    - include: tasks/cron.yml
-#
-#    - include: tasks/dashboard.yml
-#      when: dashboard_install_dir is defined and dashboard_install_dir != ''
 
     - include: tasks/install-proboci.yml
 
