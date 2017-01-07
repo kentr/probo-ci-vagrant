@@ -64,7 +64,8 @@ extra_security_enabled: false
 
 firewall_allowed_tcp_ports:
   - "22"
-  # - "80"
+  - "80"
+  - "8080"
   - "3010"
   - "3020"
   - "3050"
